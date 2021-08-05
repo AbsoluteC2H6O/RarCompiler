@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable class-methods-use-this */
 // const util = require('util');
-const parser = require('./parser');
+const parser = require("./parser");
 
 const BaseCstVisitor = parser.getBaseCstVisitorConstructor();
 
@@ -15,7 +15,7 @@ class UlaInterpreter extends BaseCstVisitor {
 
   program(ctx) {
     // visiting an array is equivalent to visiting its first element.
-    let result = '';
+    let result = "";
     ctx.statement.forEach((element) => {
       result += this.visit(element);
     });
@@ -25,17 +25,23 @@ class UlaInterpreter extends BaseCstVisitor {
   statement(ctx) {
     if (ctx.expressionStatement) {
       return this.visit(ctx.expressionStatement);
-    } if (ctx.whileStatement) {
+    }
+    if (ctx.whileStatement) {
       return this.visit(ctx.whileStatement);
-    } if (ctx.ifStatement) {
+    }
+    if (ctx.ifStatement) {
       return this.visit(ctx.ifStatement);
-    } if (ctx.printStatement) {
+    }
+    if (ctx.printStatement) {
       return this.visit(ctx.printStatement);
-    } if (ctx.blockStatement) {
+    }
+    if (ctx.blockStatement) {
       return this.visit(ctx.blockStatement);
-    } if (ctx.emptyStatement) {
+    }
+    if (ctx.emptyStatement) {
       return this.visit(ctx.emptyStatement);
-    } if (ctx.doStatement) {
+    }
+    if (ctx.doStatement) {
       return this.visit(ctx.doStatement);
     }
     console.log(ctx);
@@ -44,21 +50,27 @@ class UlaInterpreter extends BaseCstVisitor {
 
   ifStatement(ctx) {
     if (ctx.Else) {
-      return `if ${this.visit(ctx.parenExpression)} ${this.visit(ctx.statement[0])} else ${this.visit(ctx.statement[1])}`;
+      return `if ${this.visit(ctx.parenExpression)} ${this.visit(
+        ctx.statement[0]
+      )} else ${this.visit(ctx.statement[1])}`;
     }
     return `if ${this.visit(ctx.parenExpression)} ${this.visit(ctx.statement)}`;
   }
 
   whileStatement(ctx) {
-    return `while ${this.visit(ctx.parenExpression)} {${this.visit(ctx.statement)}}`;
+    return `while ${this.visit(ctx.parenExpression)} {${this.visit(
+      ctx.statement
+    )}}`;
   }
 
   doStatement(ctx) {
-    return `do {${this.visit(ctx.statement)}} while${this.visit(ctx.parenExpression)};`;
+    return `do {${this.visit(ctx.statement)}} while${this.visit(
+      ctx.parenExpression
+    )};`;
   }
 
   blockStatement(ctx) {
-    let result = '{';
+    let result = "{";
     ctx.statement.forEach((element) => {
       result += this.visit(element);
     });
@@ -75,21 +87,26 @@ class UlaInterpreter extends BaseCstVisitor {
     }
     return this.visit(ctx.relationExpression);
   }
-
+  // expressionMove(ctx) {
+  //   if (ctx.moveExpression) {
+  //     return this.visit(ctx.moveExpression);
+  //   }
+  //   return this.visit(ctx.relationExpression);
+  // }
   relationExpression(ctx) {
     if (ctx.RelationalOperator) {
       const tokenName = ctx.RelationalOperator[0].tokenType.name;
-      let operator = '';
-      if (tokenName === 'GreaterThan') {
-        operator = '>';
-      } else if (tokenName === 'LessThan') {
-        operator = '<';
-      } else if (tokenName === 'GreaterThanOrEqual') {
-        operator = '>=';
-      } else if (tokenName === 'LessThanOrEqual') {
-        operator = '<=';
+      let operator = "";
+      if (tokenName === "GreaterThan") {
+        operator = ">";
+      } else if (tokenName === "LessThan") {
+        operator = "<";
+      } else if (tokenName === "GreaterThanOrEqual") {
+        operator = ">=";
+      } else if (tokenName === "LessThanOrEqual") {
+        operator = "<=";
       } else {
-        operator = '==';
+        operator = "==";
       }
       return `${this.visit(ctx.lhs)} ${operator} ${this.visit(ctx.rhs)}`;
     }
@@ -99,7 +116,9 @@ class UlaInterpreter extends BaseCstVisitor {
   AdditionExpression(ctx) {
     if (ctx.AdditionOperator) {
       const operator = ctx.AdditionOperator[0].tokenType.name;
-      return `${this.visit(ctx.lhs)} ${operator === 'Plus' ? '+' : '-'} ${this.visit(ctx.rhs)}`;
+      return `${this.visit(ctx.lhs)} ${
+        operator === "Plus" ? "+" : "-"
+      } ${this.visit(ctx.rhs)}`;
     }
     return this.visit(ctx.lhs);
   }
@@ -107,7 +126,9 @@ class UlaInterpreter extends BaseCstVisitor {
   multiplicationExpression(ctx) {
     if (ctx.MultiplicationOperator) {
       const operator = ctx.MultiplicationOperator[0].tokenType.name;
-      return `${this.visit(ctx.lhs)} ${operator === 'Multi' ? '*' : '/'} ${this.visit(ctx.rhs)}`;
+      return `${this.visit(ctx.lhs)} ${
+        operator === "Multi" ? "*" : "/"
+      } ${this.visit(ctx.rhs)}`;
     }
     return this.visit(ctx.lhs);
   }
@@ -116,7 +137,10 @@ class UlaInterpreter extends BaseCstVisitor {
     const id = ctx.ID[0].image;
     return `${id} = ${this.visit(ctx.expression)}`;
   }
-
+  moveExpression(ctx) {
+    const id = ctx.Equals2[0].image;
+    return `${id} = ${this.visit(ctx.expression)}`;
+  }
   // eslint-disable-next-line class-methods-use-this
   term(ctx) {
     if (ctx.INT) {
@@ -131,7 +155,7 @@ class UlaInterpreter extends BaseCstVisitor {
 
   // eslint-disable-next-line no-unused-vars
   emptyStatement(ctx) {
-    return '';
+    return "";
   }
 
   printStatement(ctx) {

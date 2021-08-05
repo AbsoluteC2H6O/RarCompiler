@@ -1,10 +1,11 @@
 const { lexer } = require('./lexer');
 const parser = require('./parser');
 const interpreter = require('./interpreter');
-
 module.exports = function compiler(sourceCode) {
+
 // 1. "Tokenizar" la entrada
   const lexerResult = lexer.tokenize(`${sourceCode}`);
+  // console.table(JSON.stringify(lexerResult))
 
   // 2. "Parsear" el vector de tokens
   parser.input = lexerResult.tokens;

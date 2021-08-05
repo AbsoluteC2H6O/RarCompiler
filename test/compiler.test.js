@@ -17,10 +17,7 @@ describe('testing ULA compiler', () => {
     const result = compiler(numerosPares);
     expect(result.jsCode).toBeTruthy();
   });
-  it('compiles "fibonacci2.rare" without errors', () => {
-    const result = compiler(programa);
-    expect(result.jsCode).toBeTruthy();
-  });
+
   it('compiles "fibonacci.ula" without errors', () => {
     const result = compiler(fibonacci1);
     expect(result.jsCode).toBeTruthy();

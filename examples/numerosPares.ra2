@@ -1,0 +1,12 @@
+/* Ejemplo de Print solo los numeros pares */
+inicio assign 1
+final assign 100
+
+While (inicio lessi final) {
+  numeroAProbar assign inicio
+  While (numeroAProbar higher 0) {
+    numeroAProbar assign numeroAProbar subtract 2
+  }
+  if (numeroAProbar equal 0) Print(inicio)
+  inicio assign inicio plus 1
+}

@@ -1,0 +1,13 @@
+/* Implementación de la serie de fibonacci usando ULA */
+indice assign 1
+cantidadCiclos assign 10
+termino1 assign 0
+termino2 assign 1
+
+While (indice < cantidadCiclos) {
+  Print(termino1)
+  siguienteTermino assign termino1 plus termino2
+  termino1 assign termino2
+  termino2 assign siguienteTermino
+  indice assign indice plus 1
+}

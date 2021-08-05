@@ -99,13 +99,18 @@ class UlaParser extends CstParser {
         $.SUBRULE2($.term, { LABEL: 'rhs' });
       });
     });
-
+  
     $.RULE('assignExpression', () => {
       $.CONSUME(Tokens.ID);
       $.CONSUME(Tokens.Equals);
       $.SUBRULE($.expression);
     });
-
+    $.RULE('moveExpression', () => {
+      $.CONSUME(Tokens.Move);
+      $.CONSUME(Tokens.Equals2);
+      // $.CONSUME(Tokens.SemiColon);
+      // $.SUBRULE($.expression);
+    });
     $.RULE('term', () => {
       $.OR([
         { ALT: () => $.CONSUME(Tokens.ID) },

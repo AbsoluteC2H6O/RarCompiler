@@ -1,0 +1,8 @@
+/* Programa de Ejemplo 1 */
+i = 125 + 2; 
+j assign 100 multiply2 plus 4; 
+While (i lessi j) 
+  if (i < j) 
+    j = j - i;
+Print(j)
+Print(i)
