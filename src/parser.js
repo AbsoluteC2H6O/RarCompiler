@@ -4,7 +4,7 @@ const lexer = require('./lexer');
 const { CstParser } = chevrotain;
 const { Tokens, tokenList } = lexer;
 
-class UlaParser extends CstParser {
+class ParserRar2r extends CstParser {
   constructor() {
     super(tokenList);
 
@@ -50,7 +50,6 @@ class UlaParser extends CstParser {
       $.SUBRULE($.statement);
       $.CONSUME(Tokens.While);
       $.SUBRULE($.parenExpression);
-      // $.CONSUME(Tokens.SemiColon);
     });
 
     $.RULE('blockStatement', () => {
@@ -81,12 +80,9 @@ class UlaParser extends CstParser {
     });
 
     $.RULE('AdditionExpression', () => {
-      // using labels can make the CST processing easier
       $.SUBRULE($.multiplicationExpression, { LABEL: 'lhs' });
       $.MANY(() => {
-        // consuming 'AdditionOperator' will consume either Plus or Minus
         $.CONSUME(Tokens.AdditionOperator);
-        //  the index "2" in SUBRULE2 is needed to identify the unique position in the grammar
         $.SUBRULE2($.multiplicationExpression, { LABEL: 'rhs' });
       });
     });
@@ -95,7 +91,6 @@ class UlaParser extends CstParser {
       $.SUBRULE($.term, { LABEL: 'lhs' });
       $.MANY(() => {
         $.CONSUME(Tokens.MultiplicationOperator);
-        //  the index "2" in SUBRULE2 is needed to identify the unique position in the grammar
         $.SUBRULE2($.term, { LABEL: 'rhs' });
       });
     });
@@ -108,8 +103,6 @@ class UlaParser extends CstParser {
     $.RULE('moveExpression', () => {
       $.CONSUME(Tokens.Move);
       $.CONSUME(Tokens.Equals2);
-      // $.CONSUME(Tokens.SemiColon);
-      // $.SUBRULE($.expression);
     });
     $.RULE('term', () => {
       $.OR([
@@ -134,13 +127,10 @@ class UlaParser extends CstParser {
       $.SUBRULE($.parenExpression);
     });
 
-    // very important to call this after all the rules have been defined.
-    // otherwise the parser may not work correctly as it will lack information
-    // derived during the self analysis phase.
     this.performSelfAnalysis();
   }
 }
 
-const parser = new UlaParser([]);
+const parser = new ParserRar2r([]);
 
 module.exports = parser;

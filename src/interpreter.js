@@ -1,20 +1,16 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable class-methods-use-this */
-// const util = require('util');
+
 const parser = require("./parser");
 
 const BaseCstVisitor = parser.getBaseCstVisitorConstructor();
 
 // All our semantics go into the visitor, completly separated from the grammar.
-class UlaInterpreter extends BaseCstVisitor {
+class Rar2rInterpreter extends BaseCstVisitor {
   constructor() {
     super();
-    // This helper will detect any missing or redundant methods on this visitor
     this.validateVisitor();
   }
 
   program(ctx) {
-    // visiting an array is equivalent to visiting its first element.
     let result = "";
     ctx.statement.forEach((element) => {
       result += this.visit(element);
@@ -87,12 +83,7 @@ class UlaInterpreter extends BaseCstVisitor {
     }
     return this.visit(ctx.relationExpression);
   }
-  // expressionMove(ctx) {
-  //   if (ctx.moveExpression) {
-  //     return this.visit(ctx.moveExpression);
-  //   }
-  //   return this.visit(ctx.relationExpression);
-  // }
+
   relationExpression(ctx) {
     if (ctx.RelationalOperator) {
       const tokenName = ctx.RelationalOperator[0].tokenType.name;
@@ -163,7 +154,6 @@ class UlaInterpreter extends BaseCstVisitor {
   }
 }
 
-// We only need a single interpreter instance because our interpreter has no state.
-const interpreter = new UlaInterpreter();
+const interpreter = new Rar2rInterpreter();
 
 module.exports = interpreter;

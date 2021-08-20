@@ -3,14 +3,23 @@ const parser = require('./parser');
 const interpreter = require('./interpreter');
 module.exports = function compiler(sourceCode) {
 
-// 1. "Tokenizar" la entrada
+/* 
+  El compilador procesa la entrada,
+  la analiza y crea los token class
+  pasando el codigo por el analizador lexico
+*/
   const lexerResult = lexer.tokenize(`${sourceCode}`);
-  // console.table(JSON.stringify(lexerResult))
 
-  // 2. "Parsear" el vector de tokens
+  /* 
+    Se crea el vector de tokens
+  */
   parser.input = lexerResult.tokens;
   const cst = parser.program();
 
+  /* Si hay algun error en el parser
+    retorna el error para imprimirlo
+    en pantalla
+  */
   if (parser.errors.length > 0) {
     return {
       cst,
@@ -19,7 +28,9 @@ module.exports = function compiler(sourceCode) {
     };
   }
 
-  // 3. Ejecutar analisis semantico usando CstVisitor.
+  /* 
+    Se ejecuta el analizador semantico
+  */
   const value = interpreter.visit(cst);
 
   return {
