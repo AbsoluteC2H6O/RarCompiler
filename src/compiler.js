@@ -1,6 +1,6 @@
 const { lexer } = require('./lexer');
 const parser = require('./parser');
-const interpreter = require('./interpreter');
+const interpreter = require('./generate-code');
 module.exports = function compiler(sourceCode) {
 
 /* 

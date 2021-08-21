@@ -1,4 +1,4 @@
-/* Implementación de la serie de fibonacci usando ULA y Do While*/
+/* Implementación de la serie de fibonacci Do While*/
 indice assign 1
 cantidadCiclos assign 10
 termino1 assign 0
