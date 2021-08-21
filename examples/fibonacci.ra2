@@ -4,7 +4,7 @@ cantidadCiclos assign 10
 termino1 assign 0
 termino2 assign 1
 
-While (indice men cantidadCiclos) {
+While (indice < cantidadCiclos) {
   Print(termino1)
   valorSiguiente assign termino1 plus termino2
   termino1 assign termino2

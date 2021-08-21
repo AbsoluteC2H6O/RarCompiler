@@ -40,7 +40,7 @@ const Tokens = {
   /* operadores */
   LessThanOrEqual: createToken({ name: 'LessThanOrEqual', pattern: /<=|lessi|lessiR/, categories: RelationalOperator }),
   GreaterThanOrEqual: createToken({ name: 'GreaterThanOrEqual', pattern: />=|higheri|higheriR/, categories: RelationalOperator }),
-  LessThan: createToken({ name: 'LessThan', pattern: /<|less|lessR|men/, categories: RelationalOperator }),
+  LessThan: createToken({ name: 'LessThan', pattern: /<|less|lessR/, categories: RelationalOperator }),
   GreaterThan: createToken({ name: 'GreaterThan', pattern: />|higher|higherR/, categories: RelationalOperator }),
   IsEqual: createToken({ name: 'IsEqual', pattern: /==|equal|equalR/, categories: RelationalOperator }),
   Equals: createToken({ name: 'Equals', pattern: /=|assign|assignR|createR/ }),
